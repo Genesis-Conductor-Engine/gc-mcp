@@ -10,7 +10,7 @@ Real baremetal validation on diamondnode (GTX 1650). Every tool exercises clean 
 
 WPP + EU AI Act §16 aligned by design via Soul Capsule traces.
 
-Live landing + install in 60s: https://genesis-conductor-engine.github.io/gc-mcp/
+Live landing (Cloudflare Pages, QUBO/Eigenvertex-optimized release + AI og.jpg): https://gc-mcp-landing.pages.dev/
 
 Repo: https://github.com/Genesis-Conductor-Engine/gc-mcp (v0.2.0)
 

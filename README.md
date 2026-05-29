@@ -2,7 +2,7 @@
 
 > Universal AI MCP server for **Genesis Conductor**. Wraps the Ambient Access Layer gateway, the Soul Capsule database, the agent routing table, and telemetry as standard MCP tools so any LLM client (Claude Desktop, Cursor, Continue, ChatGPT custom GPTs, Gemini extensions, local stdio agents) can plug in.
 
-**v0.2.0** — Modernized, tested, and baremetal-validated on real diamondnode GTX 1650 (June 2026). See [bench reports](https://github.com/Genesis-Conductor-Engine/gc-mcp/tree/main), [live landing page](https://genesis-conductor-engine.github.io/gc-mcp/) (GEO + LLM-optimized, with AI-generated og.jpg), and ready-to-post [X/LinkedIn thread draft](promo/X_THREAD.md) (includes the Eigenvertex + QUBO prioritization framing used for this release).
+**v0.2.0** — Modernized, tested, and baremetal-validated on real diamondnode GTX 1650 (June 2026). See [bench reports](https://github.com/Genesis-Conductor-Engine/gc-mcp/tree/main), [live landing page](https://gc-mcp-landing.pages.dev/) (Cloudflare Pages — GEO + LLM-optimized, AI-generated og.jpg), and ready-to-post [X/LinkedIn thread draft](promo/X_THREAD.md) (includes the Eigenvertex + QUBO prioritization framing used for this release, plus the real diathese-qubo-workflow integration for P1).
 
 | Field | Value |
 |---|---|
