@@ -4,7 +4,7 @@
   "description": "Universal AI MCP server for Genesis Conductor. Exposes 7 gc_* tools (task submission, Soul Capsule WPP/EU-AI-Act traces, agent routing, telemetry) over stdio + streamable HTTP. Works with Claude Desktop, Cursor, Continue, local agents, and remote LLM connectors.",
   "license": "Apache-2.0",
   "author": "Igor Holt <igor@kovach-enterprises.com> (https://orcid.org/0009-0008-8389-1297)",
-  "homepage": "https://gc-mcp.genesisconductor.io",
+  "homepage": "https://genesis-conductor-engine.github.io/gc-mcp/",
   "repository": {
     "type": "git",
     "url": "https://github.com/Kovach-Enterprises/gc-mcp.git"
