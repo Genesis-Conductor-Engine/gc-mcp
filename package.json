@@ -1,0 +1,99 @@
+{
+  "name": "@kovach-enterprises/gc-mcp-server",
+  "version": "0.2.0",
+  "description": "Universal AI MCP server for Genesis Conductor. Exposes 7 gc_* tools (task submission, Soul Capsule WPP/EU-AI-Act traces, agent routing, telemetry) over stdio + streamable HTTP. Works with Claude Desktop, Cursor, Continue, local agents, and remote LLM connectors.",
+  "license": "Apache-2.0",
+  "author": "Igor Holt <igor@kovach-enterprises.com> (https://orcid.org/0009-0008-8389-1297)",
+  "homepage": "https://gc-mcp.genesisconductor.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kovach-Enterprises/gc-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kovach-Enterprises/gc-mcp/issues"
+  },
+  "type": "module",
+  "main": "dist/stdio.js",
+  "bin": {
+    "gc-mcp": "dist/stdio.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./stdio": "./dist/stdio.js",
+    "./http": "./dist/http.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "llms.txt",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "start": "node dist/stdio.js",
+    "start:http": "node dist/http.js",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/stdio.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "bench": "node --loader ts-node/esm scripts/bench.ts",
+    "bench:local": "node --loader ts-node/esm scripts/bench.ts --local-only",
+    "lint": "tsc --noEmit && echo 'typecheck + structure OK (add eslint/biome in v0.3)'",
+    "format": "echo 'Run prettier or biome in CI (v0.3)'",
+    "prepublishOnly": "npm run build && npm test",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.0"
+  },
+  "peerDependencies": {
+    "@modelcontextprotocol/sdk": ">=1.10.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "genesis-conductor",
+    "ai-orchestration",
+    "soul-capsule",
+    "ambient-access-layer",
+    "agent-routing",
+    "eu-ai-act",
+    "wpp",
+    "traceability",
+    "claude-desktop",
+    "cursor",
+    "continue",
+    "ambient-agents",
+    "notion-bridge",
+    "kovach-enterprises"
+  ],
+  "mcp": {
+    "server": {
+      "name": "gc-mcp-server",
+      "version": "0.2.0",
+      "description": "Genesis Conductor universal connector — 7 tools for task delegation, immutable Soul Capsule audit trails, and cross-agent telemetry.",
+      "tools": 7,
+      "transports": ["stdio", "streamable-http"],
+      "auth": "GC_API_KEY (gateway) + optional GC_NOTION_BRIDGE_AUTH"
+    }
+  }
+}

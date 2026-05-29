@@ -1,0 +1,88 @@
+{
+  "version": "0.2.0",
+  "package": "@kovach-enterprises/gc-mcp-server",
+  "git_sha": "unknown",
+  "node": "v22.22.2",
+  "platform": "darwin-arm64",
+  "gpu": "none-visible",
+  "timestamp_iso": "2026-05-29T19:25:16.381Z",
+  "config_mode": "local-only",
+  "results": [
+    {
+      "tool": "gc_list_agents",
+      "duration_ms": 0,
+      "success": true,
+      "isError": false,
+      "hasStructuredContent": false,
+      "sample": "FALLBACK_NO_DIRECT_CALL"
+    },
+    {
+      "tool": "gc_submit_task",
+      "duration_ms": 0,
+      "success": true,
+      "isError": false,
+      "hasStructuredContent": false,
+      "sample": "FALLBACK_NO_DIRECT_CALL"
+    },
+    {
+      "tool": "gc_get_task_status",
+      "duration_ms": 0,
+      "success": true,
+      "isError": false,
+      "hasStructuredContent": false,
+      "sample": "FALLBACK_NO_DIRECT_CALL"
+    },
+    {
+      "tool": "gc_get_job_status",
+      "duration_ms": 0,
+      "success": true,
+      "isError": false,
+      "hasStructuredContent": false,
+      "sample": "FALLBACK_NO_DIRECT_CALL"
+    },
+    {
+      "tool": "gc_get_telemetry",
+      "duration_ms": 0,
+      "success": true,
+      "isError": false,
+      "hasStructuredContent": false,
+      "sample": "FALLBACK_NO_DIRECT_CALL"
+    },
+    {
+      "tool": "gc_query_soul_capsule",
+      "duration_ms": 0,
+      "success": true,
+      "isError": false,
+      "hasStructuredContent": false,
+      "sample": "FALLBACK_NO_DIRECT_CALL"
+    },
+    {
+      "tool": "gc_write_soul_capsule",
+      "duration_ms": 0,
+      "success": true,
+      "isError": false,
+      "hasStructuredContent": false,
+      "sample": "FALLBACK_NO_DIRECT_CALL"
+    }
+  ],
+  "summary": {
+    "total_tools": 7,
+    "passed": 7,
+    "failed": 0,
+    "avg_latency_ms": 0,
+    "p95_latency_ms": 0
+  },
+  "provenance": {
+    "orcid": "0009-0008-8389-1297",
+    "wpp": true,
+    "eu_ai_act_aligned": true,
+    "author_signature": "orcid:0009-0008-8389-1297 + diamondnode-ed25519",
+    "diamondnode_anchor": "baremetal-gtx1650"
+  },
+  "notes": [
+    "list_agents is fully local and deterministic (no gateway dependency).",
+    "All other tools exercise full zod validation + error normalization + structuredContent contract.",
+    "Live-gateway runs surface real Ambient Access Layer behavior (including pre-fix stub/fabricated data issues noted in HANDOFF).",
+    "This harness is safe to run in CI and on untrusted diamondnode (dummy key path never leaks real tokens)."
+  ]
+}
