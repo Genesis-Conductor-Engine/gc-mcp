@@ -27,6 +27,20 @@ Tracked in the original handoff (Kovach-Enterprises/ambient-access-layer repo, c
 6. Update tool descriptions to remove the warning text once fixed.
 7. Settle proof / WPP capsule for the fix milestone.
 
+## Using QUBO + Eigenvertexies for the live re-benchmark (recommended)
+
+See `scripts/p1_qubo_optimized_live_bench.py`.
+
+This adapter:
+- Ingests a gc-mcp bench report or live `gc_get_telemetry` output as "diathese".
+- Runs an Eigenvertex (eigenvector centrality) pre-filter on the route graph.
+- Invokes the canonical real-hardware diathese-qubo-workflow (`/Users/Igor/candidate1-diathese-qubo-workflow/diathese_to_qubo.py`) to produce an attested `dispatch_qubo_table_*.json` (with content_sha256 for diamondnode attest).
+- Optionally emits the exact command to write the table as a Soul Capsule via `gc_write_soul_capsule`.
+
+Run it (after real keys) as part of the P1 re-bench loop for credible, optimized, provenance-rich numbers.
+
+The canonical QUBO root also contains the full threaded harness and diamondnode rsync driver if you want to drive everything from real GTX 1650 diathese samples.
+
 ## Related
 - See `HANDOFF.jsonl` for the original P1 items and queued Notion writes.
 - The `gc_write_soul_capsule` + notion-bridge path is the current reliable trace mechanism while gateway query surfaces are still maturing.
