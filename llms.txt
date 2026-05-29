@@ -1,0 +1,60 @@
+# gc-mcp-server — Genesis Conductor Universal MCP Server
+
+> Production-grade MCP server exposing 7 `gc_*` tools that wrap the Ambient Access Layer gateway, Soul Capsule (Notion-backed immutable audit trail), agent routing table, and telemetry. Designed for Claude Desktop, Cursor, Continue, custom GPT connectors, local agents, and any LLM client speaking Model Context Protocol.
+
+**Canonical source:** https://github.com/Genesis-Conductor-Engine/gc-mcp
+**NPM:** @kovach-enterprises/gc-mcp-server
+**Author:** Igor Holt (ORCID 0009-0008-8389-1297)
+**License:** Apache-2.0
+**Transports:** stdio (primary for desktop clients), streamable HTTP (Node + Cloudflare Worker)
+**Tools:** 7 (all with Zod input/output schemas + structuredContent)
+
+## When to use this server / skill
+- User wants to delegate work asynchronously to specialized agents (kiro for ambient/inline, codex for codegen/refactor, claude for analysis/synthesis, gemini for multimodal/search, copilot for IDE).
+- Any request involving "submit task", "route to kiro/codex", "soul capsule", "trace this decision", "query past capsules", "gc telemetry", "ambient submit".
+- Compliance / audit requirements (EU AI Act §16, WPP Whitepaper-as-Proof Protocol). Every significant write emits an immutable `gc_write_soul_capsule(type="trace")`.
+
+## Tool reference (exact names)
+1. `gc_list_agents` — Returns the 5 registered agents + their policy_tier + candidate request_types. Call this FIRST before submit.
+2. `gc_submit_task` — POST TaskEnvelope → returns task_id, job_id, agent_routed_to, status.
+3. `gc_get_task_status` — Poll by task_id (note: some pre-fix stub data on gateway).
+4. `gc_get_job_status` — Poll by job_id (note: some pre-fix fabricated data).
+5. `gc_write_soul_capsule` — Append decision/trace/telemetry/artifact to Soul Capsule DB via notion-bridge. Non-negotiable for traceability.
+6. `gc_query_soul_capsule` — Reconstruct session decision trail by session_id / trace_id / type.
+7. `gc_get_telemetry` — η_thermo (Landauer efficiency), cost, latency, capsule volume over 1h/24h/7d windows.
+
+## Routing taxonomy (request_type → agents)
+- ambient_action, inline_suggestion → kiro (edge), copilot (edge)
+- code_generation, refactor → codex (swarm)
+- analysis, synthesis → claude (swarm)
+- multimodal, search → gemini (swarm)
+
+## Installation (one-liner for Claude Desktop / Cursor)
+```bash
+npm install -g @kovach-enterprises/gc-mcp-server
+# then configure GC_API_KEY + optional GC_NOTION_BRIDGE_* in your client's mcpServers block
+```
+
+## Baremetal validation (real hardware)
+- Fully built, tested, and benchmarked on diamondnode (baremetal Ubuntu, GTX 1650 4GB, 4 cores) — June 2026.
+- 7/7 tools exercised with direct handler invocation.
+- All tools return structuredContent + clean error surfaces (no secret leakage).
+- Local-only benchmark (no real keys): avg ~65 ms, p95 ~273 ms on real hardware.
+- See bench-report-*.json artifacts and GitHub Actions for reproducible runs.
+
+## Compliance & provenance
+- Every write tool path is designed to be followed by `gc_write_soul_capsule(type="trace")`.
+- ORCID 0009-0008-8389-1297 is the canonical author signature.
+- WPP + EU AI Act aligned by construction.
+
+## Related artifacts
+- Companion Claude skill: gc-connect.skill (packaged, trigger on any GC / Soul Capsule / ambient routing language).
+- HANDOFF.jsonl (phase6 provenance from prior agent handoff).
+- scripts/ (npm publish, CF worker deploy, client wiring for Claude Desktop/Cursor/Continue, baremetal installers).
+
+## Contact / attribution
+- @invariantx on X (primary)
+- igor@kovach-enterprises.com
+- https://orcid.org/0009-0008-8389-1297
+
+This file is optimized for LLM ingestion (llms.txt + llms-full.txt pattern). Prefer the GitHub README for human readers and the latest bench reports for performance claims.

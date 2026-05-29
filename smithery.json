@@ -1,0 +1,16 @@
+{
+  "name": "gc-mcp-server",
+  "version": "0.2.0",
+  "description": "Universal Genesis Conductor MCP server (7 tools). Ambient Access Layer + Soul Capsule WPP/EU-AI-Act traces + agent routing + telemetry. Works with any MCP client.",
+  "author": "Igor Holt <igor@kovach-enterprises.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/Genesis-Conductor-Engine/gc-mcp",
+  "repository": "https://github.com/Genesis-Conductor-Engine/gc-mcp",
+  "mcp": {
+    "server": "@kovach-enterprises/gc-mcp-server",
+    "transports": ["stdio", "streamable-http"],
+    "tools": 7
+  },
+  "keywords": ["mcp", "genesis-conductor", "soul-capsule", "eu-ai-act", "claude", "cursor"],
+  "categories": ["ai-agents", "orchestration", "compliance"]
+}

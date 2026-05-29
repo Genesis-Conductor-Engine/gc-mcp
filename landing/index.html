@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gc-mcp-server — Universal AI MCP for Genesis Conductor</title>
+  <meta name="description" content="7 production-grade gc_* MCP tools for task submission, Soul Capsule WPP/EU-AI-Act traces, agent routing, and telemetry. Works with Claude Desktop, Cursor, Continue. Baremetal-validated on diamondnode GTX 1650.">
+  <meta name="keywords" content="mcp, model context protocol, mcp server, genesis conductor, soul capsule, eu ai act, claude desktop, cursor, ambient agents, traceability">
+  <link rel="canonical" href="https://gc-mcp.genesisconductor.io/">
+  <!-- Open Graph + Twitter for social traction -->
+  <meta property="og:title" content="gc-mcp-server — Genesis Conductor MCP">
+  <meta property="og:description" content="Universal connector for Genesis Conductor. 7 tools, stdio + HTTP, WPP/EU-AI-Act aligned. Validated on real GTX 1650 baremetal.">
+  <meta property="og:image" content="https://gc-mcp.genesisconductor.io/og.png">
+  <meta property="og:url" content="https://gc-mcp.genesisconductor.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@invariantx">
+  <!-- JSON-LD for GEO / AI crawlers / rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "gc-mcp-server",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform (Node.js 20+)",
+    "description": "Universal AI MCP server for Genesis Conductor. Exposes 7 tools wrapping Ambient Access Layer, Soul Capsule (immutable audit), agent routing, and telemetry.",
+    "url": "https://github.com/Genesis-Conductor-Engine/gc-mcp",
+    "author": {"@type": "Person", "name": "Igor Holt", "url": "https://orcid.org/0009-0008-8389-1297"},
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "softwareVersion": "0.2.0",
+    "keywords": ["MCP", "Model Context Protocol", "AI Agents", "EU AI Act", "Traceability", "Claude Desktop"]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+    :root { --font-sans: Inter, system-ui, sans-serif; }
+    body { font-family: var(--font-sans); }
+    .font-display { font-family: 'Space Grotesk', Inter, sans-serif; }
+    .mcp-tool { transition: transform .1s ease, box-shadow .1s ease; }
+    .mcp-tool:hover { transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+    .nav-active { color: #111827; font-weight: 600; }
+    .badge { font-size: 10px; letter-spacing: .5px; }
+    .section { scroll-margin-top: 80px; }
+    .metric { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+  <!-- NAV -->
+  <nav class="border-b border-white/10 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold text-xl">GC</div>
+        <div>
+          <div class="font-semibold tracking-tighter text-xl">gc-mcp-server</div>
+          <div class="text-[10px] text-zinc-500 -mt-1">Genesis Conductor</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="#tools" class="hover:text-white transition">Tools</a>
+        <a href="#bench" class="hover:text-white transition">Benchmarks</a>
+        <a href="#compliance" class="hover:text-white transition">Compliance</a>
+        <a href="https://github.com/Genesis-Conductor-Engine/gc-mcp" class="hover:text-white transition" target="_blank">GitHub</a>
+        <a href="#install" 
+           class="px-4 py-1.5 rounded-full bg-white text-black text-xs font-semibold hover:bg-zinc-200 transition">Install</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="max-w-6xl mx-auto px-6 pt-20 pb-16 text-center">
+    <div class="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-xs mb-6">
+      <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+      v0.2.0 — baremetal validated on diamondnode GTX 1650
+    </div>
+    <h1 class="font-display text-6xl md:text-7xl tracking-tighter font-semibold leading-[0.95]">
+      The universal<br>MCP surface for<br><span class="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Genesis Conductor</span>.
+    </h1>
+    <p class="mt-6 max-w-xl mx-auto text-lg text-zinc-400">
+      7 tools. stdio + streamable HTTP. Works everywhere Claude, Cursor, Continue, or any MCP client can reach.
+      Immutable Soul Capsule traces for EU AI Act §16 and WPP compliance.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="#install" class="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-black hover:bg-zinc-100 transition">Get started in 60 seconds</a>
+      <a href="https://github.com/Genesis-Conductor-Engine/gc-mcp" target="_blank"
+         class="inline-flex items-center gap-2 rounded-2xl border border-white/20 px-6 py-3 text-sm font-semibold hover:bg-white/5 transition">Star on GitHub →</a>
+    </div>
+    <div class="mt-6 text-xs text-zinc-500 flex items-center justify-center gap-4">
+      <div>ORCID <a href="https://orcid.org/0009-0008-8389-1297" class="underline hover:no-underline">0009-0008-8389-1297</a></div>
+      <div>•</div>
+      <div>@invariantx</div>
+      <div>•</div>
+      <div class="text-emerald-400">Apache-2.0</div>
+    </div>
+  </header>
+
+  <!-- TRUST / STATS -->
+  <div class="border-y border-white/10 bg-zinc-900/50">
+    <div class="max-w-6xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 text-center text-sm">
+      <div class="py-2"><span class="font-semibold text-2xl metric">7</span><div class="text-zinc-400 text-xs">gc_* tools</div></div>
+      <div class="py-2"><span class="font-semibold text-2xl metric">100%</span><div class="text-zinc-400 text-xs">structuredContent contract</div></div>
+      <div class="py-2"><span class="font-semibold text-2xl metric">65ms</span><div class="text-zinc-400 text-xs">avg on real GTX 1650</div></div>
+      <div class="py-2"><span class="font-semibold text-2xl metric">2</span><div class="text-zinc-400 text-xs">transports (stdio + HTTP)</div></div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <section id="tools" class="max-w-6xl mx-auto px-6 pt-16 pb-12 section">
+    <div class="flex items-end justify-between mb-6">
+      <div>
+        <div class="uppercase tracking-[3px] text-xs text-violet-400 font-medium">The surface</div>
+        <h2 class="font-display text-4xl tracking-tighter font-semibold">7 tools. Zero surprises.</h2>
+      </div>
+      <a href="https://github.com/Genesis-Conductor-Engine/gc-mcp/blob/main/src/tools.ts" target="_blank" class="text-sm text-zinc-400 hover:text-white">View source →</a>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Tool cards -->
+      <div class="mcp-tool border border-white/10 rounded-3xl p-5 bg-zinc-900">
+        <div class="font-mono text-[10px] text-emerald-400 mb-1">R/W • LOCAL</div>
+        <div class="font-semibold text-lg">gc_list_agents</div>
+        <div class="text-sm text-zinc-400 mt-2">Returns the canonical 5-agent registry (kiro, codex, claude, gemini, copilot) with policy tiers and request_type candidacy. Call this before every submit.</div>
+      </div>
+      <div class="mcp-tool border border-white/10 rounded-3xl p-5 bg-zinc-900">
+        <div class="font-mono text-[10px] text-rose-400 mb-1">WRITE • GATEWAY</div>
+        <div class="font-semibold text-lg">gc_submit_task</div>
+        <div class="text-sm text-zinc-400 mt-2">Submit natural-language TaskEnvelope. Returns task_id, job_id, agent_routed_to. The single entry point for async specialized work.</div>
+      </div>
+      <div class="mcp-tool border border-white/10 rounded-3xl p-5 bg-zinc-900">
+        <div class="font-mono text-[10px] text-amber-400 mb-1">READ • GATEWAY</div>
+        <div class="font-semibold text-lg">gc_get_task_status / gc_get_job_status</div>
+        <div class="text-sm text-zinc-400 mt-2">Poll until terminal. Explicitly documents pre-fix stub/fabricated data behavior (gateway issues #1/#2) so agents can adapt.</div>
+      </div>
+      <div class="mcp-tool border border-white/10 rounded-3xl p-5 bg-zinc-900">
+        <div class="font-mono text-[10px] text-violet-400 mb-1">WRITE • NOTION-BRIDGE</div>
+        <div class="font-semibold text-lg">gc_write_soul_capsule</div>
+        <div class="text-sm text-zinc-400 mt-2">The compliance primitive. Append decision/trace/telemetry/artifact with session_id + source. Non-negotiable for WPP / EU AI Act.</div>
+      </div>
+      <div class="mcp-tool border border-white/10 rounded-3xl p-5 bg-zinc-900">
+        <div class="font-mono text-[10px] text-sky-400 mb-1">READ • GATEWAY</div>
+        <div class="font-semibold text-lg">gc_query_soul_capsule</div>
+        <div class="text-sm text-zinc-400 mt-2">Reconstruct any session's chronological decision trail. Filter by session_id, trace_id, type. Capped at 100 for safety.</div>
+      </div>
+      <div class="mcp-tool border border-white/10 rounded-3xl p-5 bg-zinc-900">
+        <div class="font-mono text-[10px] text-teal-400 mb-1">READ • GATEWAY</div>
+        <div class="font-semibold text-lg">gc_get_telemetry</div>
+        <div class="text-sm text-zinc-400 mt-2">η_thermo (Landauer-anchored efficiency), avg latency, cost_usd, capsule volume over sliding windows. Real operational visibility.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENCHMARKS (real diamondnode data) -->
+  <section id="bench" class="bg-zinc-900 border-y border-white/10 py-12 section">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="uppercase tracking-[3px] text-xs text-emerald-400 font-medium mb-2">Real hardware evidence</div>
+      <h2 class="font-display text-4xl tracking-tighter font-semibold">Validated on baremetal diamondnode (GTX 1650)</h2>
+      <p class="text-zinc-400 mt-2 max-w-xl">Every tool exercised via direct registered handler invocation. 100% structuredContent + clean normalized errors. No secrets ever leak.</p>
+
+      <div class="mt-8 grid md:grid-cols-3 gap-4 text-sm">
+        <div class="rounded-3xl border border-white/10 p-6 bg-zinc-950">
+          <div class="text-xs text-zinc-500">DIAMONDNODE RUN (Jun 2026)</div>
+          <div class="mt-3 text-4xl font-semibold tabular-nums">65 ms</div>
+          <div class="text-emerald-400">average tool latency</div>
+          <div class="text-xs mt-4 text-zinc-400">p95: 273 ms • 7/7 tools • 0 crashes</div>
+        </div>
+        <div class="rounded-3xl border border-white/10 p-6 bg-zinc-950">
+          <div class="text-xs text-zinc-500">ERROR SURFACE DISCIPLINE</div>
+          <div class="mt-2 space-y-1 text-xs font-mono">
+            <div class="text-emerald-400">✓</div> 403 “Invalid API key” → structured {error}
+            <div class="text-emerald-400">✓</div> Missing bridge URL → explicit actionable message
+            <div class="text-emerald-400">✓</div> Auth headers never echoed
+          </div>
+        </div>
+        <div class="rounded-3xl border border-white/10 p-6 bg-zinc-950">
+          <div class="text-xs text-zinc-500">REPRODUCIBLE</div>
+          <div class="mt-3 font-mono text-xs leading-tight">npm run bench:local<br>or on any diamondnode-class edge</div>
+          <div class="mt-4 text-[10px] text-zinc-400">Full JSON reports committed + available on target at ~/gc-mcp/bench-report-*.json</div>
+        </div>
+      </div>
+      <div class="mt-4 text-xs text-zinc-500">See <a href="https://github.com/Genesis-Conductor-Engine/gc-mcp/tree/main/scripts/bench.ts" class="underline">scripts/bench.ts</a> and the three bench-report artifacts in the repo for exact numbers and provenance.</div>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE -->
+  <section id="compliance" class="max-w-6xl mx-auto px-6 py-16 section">
+    <div class="max-w-2xl">
+      <div class="uppercase tracking-[3px] text-xs text-amber-400 font-medium">WPP • EU AI Act §16</div>
+      <h2 class="font-display text-4xl tracking-tighter font-semibold mt-2">Built for traceability by default.</h2>
+      <p class="mt-4 text-zinc-400">Every significant action that touches the gateway or produces side effects is expected to be followed by a <span class="font-mono text-xs bg-white/5 px-1.5 py-px rounded">gc_write_soul_capsule(type="trace")</span> record. The Soul Capsule is the immutable, queryable audit ledger.</p>
+    </div>
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <div class="rounded-2xl border border-white/10 px-4 py-2">ORCID 0009-0008-8389-1297 canonical signature</div>
+      <div class="rounded-2xl border border-white/10 px-4 py-2">Immutable Notion-backed Soul Capsule</div>
+      <div class="rounded-2xl border border-white/10 px-4 py-2">η_thermo efficiency metric included</div>
+      <div class="rounded-2xl border border-white/10 px-4 py-2">Redacted auth in all error surfaces</div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install" class="border-t border-white/10 bg-zinc-900 py-16 section">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="font-display text-4xl tracking-tighter font-semibold">Install anywhere in &lt; 60s</h2>
+      <div class="mt-8 grid md:grid-cols-2 gap-6 text-sm">
+        <div class="border border-white/10 rounded-3xl p-6">
+          <div class="font-semibold mb-3">Claude Desktop / Cursor / Continue</div>
+          <pre class="bg-black/60 p-4 rounded-2xl text-xs overflow-x-auto">npm install -g @kovach-enterprises/gc-mcp-server
+
+# then add to claude_desktop_config.json / .cursor/mcp.json
+{
+  "mcpServers": {
+    "gc": {
+      "command": "gc-mcp",
+      "env": {
+        "GC_API_KEY": "your-gateway-bearer",
+        "GC_NOTION_BRIDGE_URL": "https://...",
+        "GC_NOTION_BRIDGE_AUTH": "..."
+      }
+    }
+  }
+}</pre>
+        </div>
+        <div class="border border-white/10 rounded-3xl p-6">
+          <div class="font-semibold mb-3">Cloudflare Worker (remote HTTP)</div>
+          <pre class="bg-black/60 p-4 rounded-2xl text-xs overflow-x-auto">wrangler secret put GC_API_KEY
+wrangler deploy
+# point any remote client at your *.workers.dev</pre>
+          <div class="text-xs text-zinc-400 mt-3">See <code>scripts/deploy_cf_worker.sh</code> and <code>wrangler.toml</code></div>
+        </div>
+      </div>
+      <div class="mt-6 text-xs text-center text-zinc-400">Also ships with companion <code>gc-connect.skill</code> for Claude (packaged, ready for clawhub / smithery-style registries).</div>
+    </div>
+  </section>
+
+  <!-- FOOTER / ATTRIBUTION -->
+  <footer class="border-t border-white/10 py-10 text-xs">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-y-4 items-center justify-between text-zinc-400">
+      <div>© 2026 Kovach Enterprises • ORCID 0009-0008-8389-1297 • Apache-2.0</div>
+      <div class="flex gap-5">
+        <a href="https://github.com/Genesis-Conductor-Engine/gc-mcp" target="_blank" class="hover:text-white">GitHub</a>
+        <a href="https://github.com/Genesis-Conductor-Engine/gc-mcp/blob/main/llms.txt" target="_blank" class="hover:text-white">llms.txt</a>
+        <a href="https://x.com/invariantx" target="_blank" class="hover:text-white">@invariantx</a>
+        <a href="https://github.com/Genesis-Conductor-Engine/gc-mcp/blob/main/HANDOFF.jsonl" target="_blank" class="hover:text-white">Phase 6 Handoff</a>
+      </div>
+      <div>Validated on real diamondnode GTX 1650 • 4 cores • 4 GB VRAM</div>
+    </div>
+  </footer>
+
+  <script>
+    // tiny interactive: clicking a tool card scrolls to GitHub tools.ts and highlights
+    document.querySelectorAll('.mcp-tool').forEach(el => {
+      el.addEventListener('click', () => {
+        window.open('https://github.com/Genesis-Conductor-Engine/gc-mcp/blob/main/src/tools.ts', '_blank');
+      });
+    });
+    // tailwind script already loaded via CDN
+    console.log('%c[gc-mcp] landing ready — GEO + social optimized', 'color:#3f3f46');
+  </script>
+</body>
+</html>

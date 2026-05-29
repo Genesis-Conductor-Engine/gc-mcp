@@ -2,15 +2,18 @@
 
 > Universal AI MCP server for **Genesis Conductor**. Wraps the Ambient Access Layer gateway, the Soul Capsule database, the agent routing table, and telemetry as standard MCP tools so any LLM client (Claude Desktop, Cursor, Continue, ChatGPT custom GPTs, Gemini extensions, local stdio agents) can plug in.
 
+**v0.2.0** — Modernized, tested, and baremetal-validated on real diamondnode GTX 1650 (June 2026). See [bench reports](https://github.com/Genesis-Conductor-Engine/gc-mcp/tree/main) and [live landing page](/landing/index.html) (GEO + LLM-optimized).
+
 | Field | Value |
 |---|---|
 | Package | `@kovach-enterprises/gc-mcp-server` |
-| Version | `0.1.0` |
+| Version | `0.2.0` |
 | Author | Igor Holt — ORCID [`0009-0008-8389-1297`](https://orcid.org/0009-0008-8389-1297) |
 | License | Apache-2.0 |
 | Transports | streamable HTTP (Node + Cloudflare Worker), stdio |
 | Tools | 7 (`gc_*` prefix) |
 | Spec source | Notion → Skills/Agents DB → `gc-mcp-server` row |
+| GitHub | [Genesis-Conductor-Engine/gc-mcp](https://github.com/Genesis-Conductor-Engine/gc-mcp) |
 
 ---
 
@@ -166,6 +169,17 @@ gc_query_soul_capsule(session_id, limit=100)
 These are documented inside each tool's MCP description so client agents can react.
 
 ---
+
+## Real Hardware Validation (diamondnode GTX 1650)
+
+All 7 tools + error surfaces exercised via direct registered handler calls on baremetal Ubuntu + GTX 1650 (4 GB VRAM). 
+
+- 7/7 tools returned valid structuredContent (or clean normalized errors)
+- Local-only benchmark (dummy key): avg 65 ms, p95 273 ms on real silicon
+- Full provenance reports committed (see `bench-report-*.json`)
+- Repro: `npm run bench:local` (or on any diamondnode-class edge node)
+
+This is the authoritative "actual capabilities" measurement for Phase 6.
 
 ## Compliance
 

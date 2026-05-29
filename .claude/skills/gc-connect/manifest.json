@@ -1,0 +1,10 @@
+{
+  "name": "gc-connect",
+  "version": "0.2.0",
+  "description": "Companion skill for @kovach-enterprises/gc-mcp-server. Teaches Claude idiomatic patterns for all 7 gc_* tools (submit, poll, Soul Capsule WPP traces, agent routing, telemetry). Trigger on any Genesis Conductor / ambient / soul-capsule language.",
+  "author": "Igor Holt (ORCID 0009-0008-8389-1297)",
+  "mcp_server": "@kovach-enterprises/gc-mcp-server",
+  "tools": ["gc_list_agents", "gc_submit_task", "gc_get_task_status", "gc_get_job_status", "gc_write_soul_capsule", "gc_query_soul_capsule", "gc_get_telemetry"],
+  "tags": ["mcp", "genesis-conductor", "eu-ai-act", "traceability", "agent-orchestration"],
+  "homepage": "https://github.com/Genesis-Conductor-Engine/gc-mcp"
+}
