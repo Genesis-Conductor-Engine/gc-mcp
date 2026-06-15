@@ -11,7 +11,6 @@ GC_GATEWAY_URL = "https://optimization-inversion.genesisconductor.io"
 GC_SOUL_CAPSULE_DB_ID = "21e416066ef1411084d1bbaf67af79d1"
 GC_TIMEOUT_MS = "15000"
 
-# Optional: route to your zone instead of the workers.dev subdomain.
-# [[routes]]
-# pattern = "gc-mcp.genesisconductor.io/*"
-# zone_name = "genesisconductor.io"
+[[routes]]
+pattern = "gc-mcp.genesisconductor.io/*"
+zone_name = "genesisconductor.io"
