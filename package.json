@@ -95,5 +95,8 @@
       "transports": ["stdio", "streamable-http"],
       "auth": "GC_API_KEY (gateway) + optional GC_NOTION_BRIDGE_AUTH"
     }
+  },
+  "overrides": {
+    "fast-uri": "3.1.4"
   }
 }
